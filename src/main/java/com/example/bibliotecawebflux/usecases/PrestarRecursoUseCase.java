@@ -23,12 +23,12 @@ public class PrestarRecursoUseCase implements Function<String, Mono<String>> {
 
         return recursoRepository.findById(id).flatMap(recurso -> {
                     if(!recurso.getIsAvailable()){
-                        return Mono.just("No esta disponible, fue prestado el "+ recurso.getFechaPrestamo());
+                        return Mono.just("No esta disponible fue prestado el "+ recurso.getFechaPrestamo());
                     }
                     recurso.setIsAvailable(false);
                     recurso.setFechaPrestamo(LocalDate.now());
                     return recursoRepository.save(recurso).then(Mono.just("El recurso esta disponible"));
                 }
-        ).switchIfEmpty(Mono.error(() -> new FileNotFoundException()));
+        );
     }
 }

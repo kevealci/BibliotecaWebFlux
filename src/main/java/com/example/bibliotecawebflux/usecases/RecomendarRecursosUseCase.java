@@ -23,16 +23,12 @@ public class RecomendarRecursosUseCase implements BiFunction<Optional<String>,Op
     public Flux<Recurso> apply(Optional<String> tipo, Optional<String> tematica) {
 
         if(tipo.isPresent() && tematica.isPresent()) {
-            return recursoRepository.findByTipoAndTematica(tipo.get(), tematica.get())
-                    .switchIfEmpty(Mono.error(() -> new FileNotFoundException()));
+            return recursoRepository.findByTipoAndTematica(tipo.get(), tematica.get());
         } else if (tipo.isPresent()) {
-            return recursoRepository.findByTipo(tipo.get())
-                    .switchIfEmpty(Mono.error(() -> new FileNotFoundException()));
+            return recursoRepository.findByTipo(tipo.get());
         } else if (tematica.isPresent()) {
-            return recursoRepository.findByTematica(tematica.get())
-                    .switchIfEmpty(Mono.error(() -> new FileNotFoundException()));
+            return recursoRepository.findByTematica(tematica.get());
         }
-
         return Flux.empty();
     }
 }

@@ -20,11 +20,11 @@ public class ConsultarRecursoUseCase implements Function<String, Mono<String>> {
     public Mono<String> apply(String id) {
 
         return recursoRepository.findById(id).flatMap(recurso -> {
-            if(!recurso.getIsAvailable()){
-                return Mono.just("No esta disponible, fue prestado el "+ recurso.getFechaPrestamo());
+            if(Boolean.FALSE.equals(recurso.getIsAvailable())){
+                return Mono.just("No esta disponible fue prestado el "+ recurso.getFechaPrestamo());
             }
             return Mono.just("El recurso esta disponible");
         }
-        ).switchIfEmpty(Mono.error(() -> new FileNotFoundException()));
+        ).switchIfEmpty(Mono.error(FileNotFoundException::new));
     }
 }

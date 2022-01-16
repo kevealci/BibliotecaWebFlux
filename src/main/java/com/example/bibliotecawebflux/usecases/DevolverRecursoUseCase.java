@@ -25,7 +25,7 @@ public class DevolverRecursoUseCase implements Function<String, Mono<String>> {
                         return recursoRepository.save(recurso)
                                 .then(Mono.just("El recurso con id "+recurso.getId()+" fue devuelto"));
                     }
-                    return Mono.just("El recurso esta disponible, no se puede devolver");
+                    return Mono.just("El recurso esta disponible no se puede devolver");
                 });
     }
 }
